@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: customer-intelligence-hub-api
+    runtime: python
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: cd backend && python -m uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_MODEL
+        value: gemini-3.5-flash-lite
+      - key: CORS_ORIGINS
+        sync: false
+      - key: FRONTEND_ORIGIN
+        sync: false
+      - key: MAX_UPLOAD_SIZE_MB
+        value: "1024"
